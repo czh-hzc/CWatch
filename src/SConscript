@@ -1,0 +1,40 @@
+import os
+from building import *
+
+src = []              
+inc = []
+cwd = GetCurrentDir()
+
+# Add source code
+src = Glob('*.c')
+src += Glob('ui/*.c')
+src += Glob('ui/components/*.c')
+src += Glob('ui/screens/*.c')
+src += Glob('ui/fonts/*.c')
+src += Glob('ui/images/*.c')
+src += Glob('drivers/sensor_i2c/*.c')
+src += Glob('drivers/BME280/*.c')
+src += Glob('drivers/LSM6DS3TR/*.c')
+src += Glob('drivers/MAX30102/*.c')
+src += Glob('drivers/QMC5883/*.c')
+src += Glob('drivers/RTC/*.c')
+src += Glob('app/*.c')
+
+inc += [cwd]
+inc += [os.path.join(cwd, 'ui')]
+inc += [os.path.join(cwd, 'ui/components')]
+inc += [os.path.join(cwd, 'ui/screens')]
+inc += [os.path.join(cwd, 'ui/fonts')]
+inc += [os.path.join(cwd, 'ui/images')]
+inc += [os.path.join(cwd, 'drivers/sensor_i2c')]
+inc += [os.path.join(cwd, 'drivers/BME280')]
+inc += [os.path.join(cwd, 'drivers/LSM6DS3TR')]
+inc += [os.path.join(cwd, 'drivers/MAX30102')]
+inc += [os.path.join(cwd, 'drivers/QMC5883')]
+inc += [os.path.join(cwd, 'drivers/RTC')]
+inc += [os.path.join(cwd, 'app')]
+
+
+group = DefineGroup('Applications', src, depend = [''], CPPPATH = inc)
+
+Return('group')

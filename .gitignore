@@ -1,0 +1,11 @@
+# Build outputs
+project/build_*/
+project/.sconsign.dblite
+
+# Python cache
+project/__pycache__/
+**/__pycache__/
+*.pyc
+
+# Tooling caches / logs
+*.log
