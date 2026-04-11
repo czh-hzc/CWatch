@@ -1,68 +1,68 @@
-# CWatch Project Structure
+# CWatch 项目结构说明
 
-This project is a smartwatch application built on RT-Thread, Sifli SDK, and LVGL.
+本项目是基于 RT-Thread、Sifli SDK 和 LVGL 的智能手表应用工程。
 
-## Directory Layout
+## 目录结构
 
 ```text
 CWatch/
-|- src/                         # Core source code
-|  |- main.c                    # Program entry
-|  |- app/                      # App layer (data, tasks, BLE, UI update)
-|  |- drivers/                  # Sensor and peripheral drivers
-|  `- ui/                       # LVGL UI code (screens/assets/components)
-|- project/                     # Build system and project config (SCons/Kconfig)
-|  |- SConstruct                # Top-level build entry
-|  |- SConscript                # Combines SDK and src build scripts
-|  |- proj.conf                 # Project config
-|  `- build_CWatch_hcpu/        # Build outputs (generated)
-`- image/                       # Separate image scripts and ezip assets
+|- src/                         # 核心源码
+|  |- main.c                    # 程序入口
+|  |- app/                      # 应用层（数据、任务、BLE、UI 刷新）
+|  |- drivers/                  # 传感器与外设驱动
+|  `- ui/                       # LVGL 界面代码（页面/资源/组件）
+|- project/                     # 构建系统与工程配置（SCons/Kconfig）
+|  |- SConstruct                # 顶层构建入口
+|  |- SConscript                # 组织 SDK 与 src 的构建脚本
+|  |- proj.conf                 # 工程配置
+|  `- build_CWatch_hcpu/        # 构建输出（自动生成）
+`- image/                       # 独立图像脚本与 ezip 资源
 ```
 
-## Main Startup Flow
+## 主启动流程
 
-`src/main.c` initializes modules in this order:
+`src/main.c` 按如下顺序初始化：
 1. `DataHub_Init()`
 2. `SensorTask_Start()`
 3. `lvgl_start()`
 4. `ble_app_init()`
 
-## Module Responsibilities
+## 模块职责
 
 ### `src/app/`
-- `data_hub.*`: shared runtime data model (`system_data`) and mutex (`data_mutex`)
-- `sensor_task.*`: sensor collection thread (IMU, env, heart/spo2, magnetometer, RTC)
-- `ui_update.*`: periodic UI refresh and per-screen sensor enable flags
-- `app_ble.*` and `ble_rx.*`: BLE service, advertising, connection events, phone data receive
-- `compass.*`: heading calculation from motion and magnetometer data
+- `data_hub.*`：共享运行时数据模型（`system_data`）与互斥锁（`data_mutex`）
+- `sensor_task.*`：传感器采集线程（IMU、环境、心率血氧、磁力计、RTC）
+- `ui_update.*`：周期刷新 UI，并按页面动态启停采集项
+- `app_ble.*` 与 `ble_rx.*`：BLE 服务、广播、连接事件、手机数据接收
+- `compass.*`：基于运动与磁力数据计算航向角
 
 ### `src/drivers/`
-- `BME280/`: temperature, pressure, humidity
-- `LSM6DS3TR/`: accelerometer and gyroscope
-- `MAX30102/`: heart rate and SpO2
-- `QMC5883/`: magnetometer
-- `RTC/`: realtime clock
-- `sensor_i2c/`: shared I2C abstraction for sensors
+- `BME280/`：温度、气压、湿度
+- `LSM6DS3TR/`：加速度计与陀螺仪
+- `MAX30102/`：心率与血氧
+- `QMC5883/`：磁力计
+- `RTC/`：实时时钟
+- `sensor_i2c/`：传感器共用 I2C 抽象层
 
 ### `src/ui/`
-- `ui.c/ui.h`, `ui_start.c`: UI setup and LVGL thread startup
-- `screens/`: generated and custom screen files (`ui_Screen1...7`, weather screens)
-- `images/`, `fonts/`: LVGL image/font resources in C arrays
-- `components/`: UI component hooks
-- `honeycomb.*`: honeycomb launcher layout logic
+- `ui.c/ui.h`、`ui_start.c`：UI 初始化与 LVGL 线程启动
+- `screens/`：生成页面与自定义页面（`ui_Screen1...7`、天气页等）
+- `images/`、`fonts/`：LVGL 图片/字体 C 数组资源
+- `components/`：UI 组件钩子
+- `honeycomb.*`：蜂窝启动器布局逻辑
 
-## Runtime Data Flow
+## 运行时数据流
 
-1. Sensor thread collects data and writes into `system_data`.
-2. UI timer checks active screen and enables needed sensor groups.
-3. UI reads a data snapshot and updates widgets.
-4. BLE receives phone-side data (for example weather/time) and updates `system_data` and RTC.
+1. 传感器线程采集数据并写入 `system_data`。
+2. UI 定时器根据当前页面启用所需采集组。
+3. UI 读取数据快照并刷新控件。
+4. BLE 接收手机侧数据（如天气/时间）并更新 `system_data` 与 RTC。
 
-## Structure Notes
+## 结构说明与建议
 
-- `project/build_CWatch_hcpu/` is generated output and should be treated as build artifacts.
-- `image/ezip` and `src/ui/images` both contain image resources; consider unifying one source of truth later.
-- Suggested next organization steps:
-  1. Add `docs/` for protocol/UI/sensor mapping notes.
-  2. Add `tools/` for asset conversion scripts.
-  3. Add CI build scripts for reproducible builds.
+- `project/build_CWatch_hcpu/` 属于构建产物，应视为生成目录。
+- `image/ezip` 与 `src/ui/images` 同时存放图片资源，后续建议统一单一来源。
+- 建议后续补充：
+  1. `docs/`：协议、页面与传感器映射文档
+  2. `tools/`：资源转换脚本
+  3. CI 构建脚本：提高构建可复现性
