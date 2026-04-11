@@ -232,7 +232,7 @@ static void ui_update_timer_cb(lv_timer_t * timer)
 
         for (int i = 0; i < 12; i++) 
         {
-            hourly_weather_t *hourly = &system_data.hourly_forecast[i];
+            hourly_weather_t *hourly = &local_hourly[i];
             snprintf(buf, sizeof(buf), "%02d:00", hourly->hour);
             lv_label_set_text(time_labels[i], buf);
             snprintf(buf, sizeof(buf), "%d°", hourly->temp);

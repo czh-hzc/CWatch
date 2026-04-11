@@ -5,6 +5,16 @@
 #include "lsm6ds3tr_c.h"
 #include "lsm6ds3tr_c_regs.h"
 
+#ifndef SENSOR_RUNTIME_LOG
+#define SENSOR_RUNTIME_LOG 0
+#endif
+
+#if SENSOR_RUNTIME_LOG
+#define SENSOR_LOG(...) rt_kprintf(__VA_ARGS__)
+#else
+#define SENSOR_LOG(...) do { } while (0)
+#endif
+
 void lsm6ds3tr_readid(void)
 {
     rt_uint8_t id;
@@ -85,7 +95,7 @@ rt_uint8_t lsm6ds3tr_getdata(float *out_gx, float *out_gy, float *out_gz, float 
         *out_az = acc_z;
 
         //rt_kprintf("raw gyro: (%d, %d, %d), raw acc: (%d, %d, %d)\n", raw_gyro_x, raw_gyro_y, raw_gyro_z, raw_acc_x, raw_acc_y, raw_acc_z);
-        rt_kprintf("temp: %.2f C, tgyro: (%.2f, %.2f, %.2f) dps, acc: (%.2f, %.2f, %.2f) mg\n", temp, gyro_x, gyro_y, gyro_z, acc_x, acc_y, acc_z);
+        SENSOR_LOG("temp: %.2f C, tgyro: (%.2f, %.2f, %.2f) dps, acc: (%.2f, %.2f, %.2f) mg\n", temp, gyro_x, gyro_y, gyro_z, acc_x, acc_y, acc_z);
 
         return 1;
     }
