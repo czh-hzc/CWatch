@@ -1,0 +1,89 @@
+﻿<view class="page">
+  <view class="top-card">
+    <view class="top-main">
+      <view>
+        <view class="brand">CWatch</view>
+        <view class="page-title">手表连接助手</view>
+      </view>
+      <view class="status-pill {{connectedDeviceId ? 'status-on' : 'status-off'}}">
+        {{connectedDeviceId ? '已连接' : '未连接'}}
+      </view>
+    </view>
+
+    <view class="top-status">
+      <view class="status-line">
+        <text class="status-name">当前状态</text>
+        <text class="status-text">{{statusText}}</text>
+      </view>
+      <view class="status-line">
+        <text class="status-name">同步状态</text>
+        <text class="status-text">{{syncStateText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="stats-row">
+    <view class="stat-card accent-blue">
+      <view class="stat-label">自动同步</view>
+      <view class="stat-value">{{syncInProgress ? '进行中' : '待命'}}</view>
+    </view>
+    <view class="stat-card accent-orange">
+      <view class="stat-label">最近同步</view>
+      <view class="stat-value small-text">{{lastSyncText}}</view>
+    </view>
+  </view>
+
+  <view class="section-card">
+    <view class="section-head">
+      <view class="section-title">连接控制</view>
+      <view class="section-tip">BLE</view>
+    </view>
+    <view class="btn-row">
+      <button type="primary" class="primary-btn" bindtap="startBluetooth" loading="{{autoConnecting}}">重新连接</button>
+      <button class="secondary-btn" bindtap="stopScan">停止搜索</button>
+    </view>
+  </view>
+
+  <view class="section-card">
+    <view class="section-head">
+      <view class="section-title">快捷同步</view>
+      <view class="section-tip warm-tip">AUTO</view>
+    </view>
+    <view class="sync-banner {{syncInProgress ? 'sync-active' : 'sync-idle'}}">
+      {{syncInProgress ? '连接完成后正在自动同步数据，请稍候。' : '连接成功后会自动同步；如果失败，可以使用下面的手动按钮补发。'}}
+    </view>
+    <view class="manual-grid">
+      <button class="mini-btn" bindtap="syncTime">同步时间</button>
+      <button class="mini-btn" bindtap="getWeatherAndSend">今天天气</button>
+      <button class="mini-btn" bindtap="get7DayWeatherAndSend">7 天天气</button>
+      <button class="mini-btn" bindtap="get24HourWeatherAndSend">24 小时</button>
+    </view>
+  </view>
+
+  <view class="section-card">
+    <view class="section-head">
+      <view class="section-title">附近设备</view>
+      <view class="section-tip">{{devices.length}} 台</view>
+    </view>
+
+    <block wx:if="{{devices.length}}">
+      <block wx:for="{{devices}}" wx:key="deviceId">
+        <view class="device-item" bindtap="connectDevice" data-device-id="{{item.deviceId}}" data-name="{{item.name || item.localName}}">
+          <view class="device-info">
+            <view class="device-name">{{item.name || item.localName || '未知设备'}}</view>
+            <view class="device-id">{{item.deviceId}}</view>
+          </view>
+          <view class="device-side">
+            <view class="device-rssi">{{item.RSSI}} dBm</view>
+            <view class="device-action">连接</view>
+          </view>
+        </view>
+      </block>
+    </block>
+
+    <view wx:else class="empty-box">
+      <view class="empty-title">正在搜索设备</view>
+      <view class="empty-desc">打开页面后会自动查找名为 CWatch 的 BLE 设备。</view>
+    </view>
+  </view>
+</view>

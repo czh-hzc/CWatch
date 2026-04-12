@@ -17,6 +17,7 @@
 #include "ui_update.h"
 #include "ui_start.h"
 #include "app_ble.h"
+#include "app_bt_classic.h"
 
 int main(void)
 {
@@ -24,6 +25,7 @@ int main(void)
     DataHub_Init();
     SensorTask_Start();
     lvgl_start();
+    bt_classic_app_init();
     ble_app_init();
     
     while (1)

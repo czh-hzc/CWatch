@@ -99,11 +99,12 @@ static void start_adv(void)
 {
     sibles_advertising_para_t para = {0};
 
-    char device_name[] = "CWatch"; 
+    static const char device_name[] = "CWatch";
     rt_uint8_t name_len = strlen(device_name);
+    rt_uint8_t svc_uuid_len = sizeof(g_svc_uuid);
 
     ble_gap_dev_name_t *dev_name = rt_malloc(sizeof(ble_gap_dev_name_t) + name_len);
-    if(dev_name)
+    if (dev_name)
     {
         dev_name->len = name_len;
         rt_memcpy(dev_name->name, device_name, name_len);
@@ -118,20 +119,20 @@ static void start_adv(void)
     para.config.max_tx_pwr = 0x7F;                       // 使用系统最大发射功率，信号拉满
     para.config.is_auto_restart = 1;                     // 如果手机连上后又断开了，自动重新开始广播
 
-    para.rsp_data.completed_name = rt_malloc(name_len + sizeof(sibles_adv_type_name_t));
-    if (para.rsp_data.completed_name) 
+    para.adv_data.disc_mode = GAPM_ADV_MODE_GEN_DISC;
+    para.adv_data.completed_name = rt_malloc(name_len + sizeof(sibles_adv_type_name_t));
+    if (para.adv_data.completed_name)
     {
-        para.rsp_data.completed_name->name_len = name_len;
-        rt_memcpy(para.rsp_data.completed_name->name, device_name, name_len);
+        para.adv_data.completed_name->name_len = name_len;
+        rt_memcpy(para.adv_data.completed_name->name, device_name, name_len);
     }
 
-    rt_uint8_t manu_data[] = {0x11, 0x22}; // 随便写两个字节当诱饵
-    para.adv_data.manufacturer_data = rt_malloc(sizeof(sibles_adv_type_manufacturer_data_t) + sizeof(manu_data));
-    if (para.adv_data.manufacturer_data) 
+    para.adv_data.completed_uuid = rt_malloc(sizeof(sibles_adv_type_srv_uuid_t) + sizeof(sibles_adv_uuid_t));
+    if (para.adv_data.completed_uuid)
     {
-        para.adv_data.manufacturer_data->company_id = 0x1234; // 随便填个公司 ID
-        para.adv_data.manufacturer_data->data_len = sizeof(manu_data);
-        rt_memcpy(para.adv_data.manufacturer_data->additional_data, manu_data, sizeof(manu_data));
+        para.adv_data.completed_uuid->count = 1;
+        para.adv_data.completed_uuid->uuid_list[0].uuid_len = svc_uuid_len;
+        rt_memcpy(para.adv_data.completed_uuid->uuid_list[0].uuid.uuid_128, g_svc_uuid, svc_uuid_len);
     }
 
     para.evt_handler = adv_event_handler;
@@ -146,8 +147,8 @@ static void start_adv(void)
         rt_kprintf("Failed to start broadcast\r\n");
     }
 
-    if (para.rsp_data.completed_name) rt_free(para.rsp_data.completed_name);
-    if (para.adv_data.manufacturer_data) rt_free(para.adv_data.manufacturer_data);
+    if (para.adv_data.completed_name) rt_free(para.adv_data.completed_name);
+    if (para.adv_data.completed_uuid) rt_free(para.adv_data.completed_uuid);
 }
 
 // ====================================================================
