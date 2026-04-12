@@ -41,6 +41,10 @@ void ui_Screen3_screen_init(void)
     lv_obj_set_align(ui_Image7, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_Image7, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_Image7, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_img_set_pivot(ui_Image7,
+                     ui_img_pngsucai_3128177_ef13f6_png.header.w / 2,
+                     ui_img_pngsucai_3128177_ef13f6_png.header.h / 2);
+    lv_img_set_angle(ui_Image7, 0);
     lv_img_set_zoom(ui_Image7, 330);
 
     ui_Label5 = lv_label_create(ui_Screen3);

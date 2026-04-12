@@ -5,6 +5,16 @@
 #include "QMC5883P.h"
 #include "QMC3883P_regs.h"
 
+#ifndef QMC5883P_RUNTIME_LOG
+#define QMC5883P_RUNTIME_LOG 0
+#endif
+
+#if QMC5883P_RUNTIME_LOG
+#define QMC_LOG(...) rt_kprintf(__VA_ARGS__)
+#else
+#define QMC_LOG(...) do { } while (0)
+#endif
+
 void QMC5883P_readid(void)
 {
     rt_uint8_t id;
@@ -61,7 +71,7 @@ rt_uint8_t QMC5883P_getdata(rt_int16_t *out_x, rt_int16_t *out_y, rt_int16_t *ou
         *out_y = y;
         *out_z = z;
 
-        rt_kprintf("QMC5883P data: x=%d, y=%d, z=%d\n", x, y, z);
+        QMC_LOG("QMC5883P data: x=%d, y=%d, z=%d\n", x, y, z);
         return 1;
     }
     else

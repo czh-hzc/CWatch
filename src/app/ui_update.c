@@ -7,6 +7,8 @@
 #include "compass.h"
 #include "RTC_T.h"
 
+#define UI_COMPASS_DIAL_OFFSET_DEG  (0.0f)
+
 static void ui_update_timer_cb(lv_timer_t * timer)
 {
     char buf[32];
@@ -125,9 +127,11 @@ static void ui_update_timer_cb(lv_timer_t * timer)
     else if (current_screen == ui_Screen3) 
     {
     // 传入局部变量数据，计算航向角
-        float heading = Compass_Calculate(local_ax, local_ay, local_az, local_mx, local_my, local_mz);
+        float heading = Compass_Calculate(local_ax, local_ay, local_az,
+                                          local_gx, local_gy, local_gz,
+                                          local_mx, local_my, local_mz);
 
-        lv_img_set_angle(ui_Image7, (int16_t)(360.0f - heading * 10)); 
+        lv_img_set_angle(ui_Image7, (int16_t)(3600.0f - (heading + UI_COMPASS_DIAL_OFFSET_DEG) * 10.0f));
 
         snprintf(buf, sizeof(buf), "%d°", (int)heading);
         lv_label_set_text(ui_Label5, buf);

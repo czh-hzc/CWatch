@@ -1,11 +1,35 @@
-# Build outputs
+# Ignore everything by default, then keep only the project core.
+*
+!/.gitignore
+!/README.md
+!/src/
+!/src/**
+!/project/
+!/project/Kconfig
+!/project/Kconfig.proj
+!/project/proj.conf
+!/project/rtconfig.py
+!/project/rtconfig_project.h
+!/project/SConscript
+!/project/SConstruct
+
+# Local/editor files
+.vscode/
+.idea/
+*.code-workspace
+
+# Build outputs and caches
 project/build_*/
 project/.sconsign.dblite
-
-# Python cache
 project/__pycache__/
 **/__pycache__/
 *.pyc
+*.pyo
 
-# Tooling caches / logs
+# Logs and temporary files
 *.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
