@@ -1,9 +1,8 @@
 ﻿# CWatch 项目说明
 
-本项目是基于 RT-Thread、SiFli SDK 和 LVGL 的智能手表应用工程，当前同时包含：
+本项目是基于 RT-Thread、SiFli SDK 和 LVGL 的智能手表应用工程，当前仓库主体以手表固件工程为主，另外本地还配有微信小程序工程用于联调。
 
 - 手表固件工程
-- 微信小程序配套工程
 - BLE 数据同步链路
 - 经典蓝牙音频连接模板
 
@@ -20,7 +19,7 @@ CWatch/
 |  |- SConstruct                # 顶层构建入口
 |  |- SConscript                # 组织 SDK 与 src 的构建脚本
 |  `- proj.conf                 # 工程配置
-|- CWatch_vxxcx/                # 微信小程序工程
+|- CWatch_vxxcx/                # 微信小程序工程（当前默认不纳入仓库）
 |  |- app.js                    # 小程序入口
 |  |- app.json                  # 小程序全局配置
 |  |- app.wxss                  # 小程序全局样式
@@ -156,17 +155,12 @@ CWatch/
 
 ## Git 提交说明
 
-当前仓库已经调整 `.gitignore`，使以下内容可以正常纳入版本管理：
+当前仓库默认纳入版本管理的是固件主体源码与工程配置。
 
-- 固件主体源码
-- 小程序主体工程 `CWatch_vxxcx/`
-
-同时已忽略以下本地私有文件：
-
-- `CWatch_vxxcx/project.private.config.json`
+微信小程序目录 `CWatch_vxxcx/` 当前默认不纳入仓库，用于本地联调与页面开发。
 
 ## 说明与建议
 
 - `project/build_CWatch_hcpu/` 属于构建产物，应视为生成目录
-- `project.private.config.json` 属于微信开发者工具本地私有配置，不建议提交
+- 若后续需要单独开源或提交小程序，可再单独调整 `.gitignore`
 - 当前经典蓝牙部分是连接模板，后续若要实现真正的音频播放，还需要继续补音频输出链路

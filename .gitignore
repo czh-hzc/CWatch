@@ -12,14 +12,11 @@
 !/project/rtconfig_project.h
 !/project/SConscript
 !/project/SConstruct
-!/CWatch_vxxcx/
-!/CWatch_vxxcx/**
 
 # Local/editor files
 .vscode/
 .idea/
 *.code-workspace
-CWatch_vxxcx/project.private.config.json
 
 # Build outputs and caches
 project/build_*/
