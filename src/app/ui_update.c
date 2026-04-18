@@ -6,12 +6,15 @@
 #include "ui_update.h"
 #include "compass.h"
 #include "RTC_T.h"
+#include "battery_adc.h"
 
 #define UI_COMPASS_DIAL_OFFSET_DEG  (0.0f)
 
 static void ui_update_timer_cb(lv_timer_t * timer)
 {
     char buf[32];
+    battery_adc_info_t battery_info;
+    rt_err_t battery_ret = -RT_ERROR;
 
     lv_obj_t * current_screen = lv_scr_act();
 
@@ -100,6 +103,7 @@ static void ui_update_timer_cb(lv_timer_t * timer)
     {
         const char *week_str[] = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
 
+        battery_ret = BatteryADC_ReadInfo(&battery_info);
         snprintf(buf, sizeof(buf), "%d", (int)local_heart_rate);
         lv_label_set_text(ui_heart_label, buf);
         snprintf(buf, sizeof(buf), "%d", (int)local_spo2);
@@ -116,6 +120,19 @@ static void ui_update_timer_cb(lv_timer_t * timer)
         lv_label_set_text(ui_min, buf);
         snprintf(buf, sizeof(buf), "%s", week_str[weekday]);
         lv_label_set_text(ui_week, buf);
+        if (battery_ret == RT_EOK)
+        {
+            snprintf(buf, sizeof(buf), "%u%%", battery_info.percent);
+            lv_label_set_text(ui_battery_label, buf);
+            lv_arc_set_value(ui_battery_arc, battery_info.level);
+            lv_slider_set_value(ui_battery_slider, battery_info.level, LV_ANIM_OFF);
+        }
+        else
+        {
+            lv_label_set_text(ui_battery_label, "N/A");
+            lv_arc_set_value(ui_battery_arc, 0);
+            lv_slider_set_value(ui_battery_slider, 0, LV_ANIM_OFF);
+        }
 
     }
     else if(current_screen == ui_Screen2)
