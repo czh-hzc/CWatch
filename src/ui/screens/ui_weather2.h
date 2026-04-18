@@ -96,7 +96,6 @@ extern lv_obj_t * ui_weathermax7;
 extern lv_obj_t * ui_city2;
 extern lv_obj_t * ui_week2;
 extern lv_obj_t * ui_year2;
-extern lv_obj_t * ui_Label1;
 // CUSTOM VARIABLES
 
 #ifdef __cplusplus

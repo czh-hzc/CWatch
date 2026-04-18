@@ -43,14 +43,15 @@ extern lv_obj_t * ui____initial_actions0;
 // IMAGES AND IMAGE SETS
 LV_IMG_DECLARE(ui_img_battery_png);    // assets/battery.png
 LV_IMG_DECLARE(ui_img_1883903296);    // assets/heart (2).png
+LV_IMG_DECLARE(ui_img_weather_rain_png);    // assets/weather_rain.png
 LV_IMG_DECLARE(ui_img_o2_png);    // assets/O2.png
 LV_IMG_DECLARE(ui_img_foot_png);    // assets/foot.png
 LV_IMG_DECLARE(ui_img_hot_png);    // assets/hot.png
 LV_IMG_DECLARE(ui_img_wave2_png);    // assets/wave2.png
 LV_IMG_DECLARE(ui_img_wave1_png);    // assets/wave1.png
 LV_IMG_DECLARE(ui_img_heart_png);    // assets/heart.png
-LV_IMG_DECLARE(ui_img_pngsucai_3128177_ef13f6_png);    // assets/pngsucai_3128177_ef13f6.png
-LV_IMG_DECLARE(ui_img_arrow_png);    // assets/arrow.png
+LV_IMG_DECLARE(ui_img_compass1_png);    // assets/compass1.png
+LV_IMG_DECLARE(ui_img_clockwise_sec_png);    // assets/clockwise_sec.png
 LV_IMG_DECLARE(
     ui_img_gemini_generated_image_fdcqbnfdcqbnfdcq_png);    // assets/Gemini_Generated_Image_fdcqbnfdcqbnfdcq.png
 LV_IMG_DECLARE(ui_img_altitude_png);    // assets/altitude.png
@@ -59,15 +60,16 @@ LV_IMG_DECLARE(ui_img_press_png);    // assets/press.png
 LV_IMG_DECLARE(ui_img_temp_png);    // assets/temp.png
 LV_IMG_DECLARE(ui_img_wsun_png);    // assets/wsun.png
 LV_IMG_DECLARE(ui_img_weather_sun_cloud_png);    // assets/weather_sun_cloud.png
-LV_IMG_DECLARE(ui_img_weather_cloud_png);    
-LV_IMG_DECLARE(ui_img_weather_sun_png);    
-LV_IMG_DECLARE(ui_img_wrain_png);
-LV_IMG_DECLARE(ui_img_wcloud_png);
+LV_IMG_DECLARE(ui_img_weather_sun_png);    // assets/weather_sun.png
+LV_IMG_DECLARE(ui_img_weather_cloud_fog_png);    // assets/weather_cloud_fog.png
+LV_IMG_DECLARE(ui_img_weather_cloud_png);    // assets/weather_cloud.png
 LV_IMG_DECLARE(ui_img_compass_png);
 LV_IMG_DECLARE(ui_img_light_png);
 LV_IMG_DECLARE(ui_img_heart1_png);
 LV_IMG_DECLARE(ui_img_setting_png);
 LV_IMG_DECLARE(ui_img_env_png);
+LV_IMG_DECLARE(ui_img_wrain_png);
+LV_IMG_DECLARE(ui_img_wcloud_png);
 
 // FONTS
 LV_FONT_DECLARE(ui_font_chinese);

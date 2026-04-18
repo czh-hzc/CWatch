@@ -19,6 +19,8 @@ lv_obj_t * ui_heart_image1 = NULL;
 lv_obj_t * ui_heart_button = NULL;
 lv_obj_t * ui_Arc9 = NULL;
 lv_obj_t * ui_button = NULL;
+lv_obj_t * ui_weather_icon = NULL;
+lv_obj_t * ui_maintemp = NULL;
 lv_obj_t * ui_spo2_arc = NULL;
 lv_obj_t * ui_spo2_label = NULL;
 lv_obj_t * ui_spo2_image = NULL;
@@ -282,6 +284,27 @@ void ui_Screen1_screen_init(void)
     lv_obj_set_style_shadow_color(ui_button, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_shadow_opa(ui_button, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    ui_weather_icon = lv_img_create(ui_Arc9);
+    lv_img_set_src(ui_weather_icon, &ui_img_weather_rain_png);
+    lv_obj_set_width(ui_weather_icon, LV_SIZE_CONTENT);   /// 37
+    lv_obj_set_height(ui_weather_icon, LV_SIZE_CONTENT);    /// 30
+    lv_obj_set_x(ui_weather_icon, 0);
+    lv_obj_set_y(ui_weather_icon, -20);
+    lv_obj_set_align(ui_weather_icon, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_weather_icon, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_weather_icon, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_maintemp = lv_label_create(ui_Arc9);
+    lv_obj_set_width(ui_maintemp, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_maintemp, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_maintemp, 6);
+    lv_obj_set_y(ui_maintemp, 16);
+    lv_obj_set_align(ui_maintemp, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_maintemp, "39°");
+    lv_obj_set_style_text_color(ui_maintemp, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_maintemp, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_maintemp, &lv_font_montserrat_38, LV_PART_MAIN | LV_STATE_DEFAULT);
+
     ui_spo2_arc = lv_arc_create(ui_Screen1);
     lv_obj_set_width(ui_spo2_arc, 100);
     lv_obj_set_height(ui_spo2_arc, 100);
@@ -491,6 +514,8 @@ void ui_Screen1_screen_destroy(void)
     ui_heart_button = NULL;
     ui_Arc9 = NULL;
     ui_button = NULL;
+    ui_weather_icon = NULL;
+    ui_maintemp = NULL;
     ui_spo2_arc = NULL;
     ui_spo2_label = NULL;
     ui_spo2_image = NULL;

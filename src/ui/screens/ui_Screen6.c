@@ -6,16 +6,7 @@
 #include "../ui.h"
 
 lv_obj_t * ui_Screen6 = NULL;
-lv_obj_t * ui_Button1 = NULL;
 // event funtions
-void ui_event_Button1(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Screen1, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen1_screen_init);
-    }
-}
 
 // build funtions
 
@@ -27,19 +18,6 @@ void ui_Screen6_screen_init(void)
     lv_obj_set_style_bg_opa(ui_Screen6, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_width(ui_Screen6, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_Button1 = lv_btn_create(ui_Screen6);
-    lv_obj_set_width(ui_Button1, 100);
-    lv_obj_set_height(ui_Button1, 50);
-    lv_obj_set_x(ui_Button1, -2);
-    lv_obj_set_y(ui_Button1, 179);
-    lv_obj_set_align(ui_Button1, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_Button1, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_Button1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_shadow_color(ui_Button1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_opa(ui_Button1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    lv_obj_add_event_cb(ui_Button1, ui_event_Button1, LV_EVENT_ALL, NULL);
-
 }
 
 void ui_Screen6_screen_destroy(void)
@@ -48,6 +26,5 @@ void ui_Screen6_screen_destroy(void)
 
     // NULL screen variables
     ui_Screen6 = NULL;
-    ui_Button1 = NULL;
 
 }

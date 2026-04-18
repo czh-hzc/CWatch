@@ -185,8 +185,8 @@ void ui_Screen5_screen_init(void)
     ui_press_test = lv_label_create(ui_Screen5);
     lv_obj_set_width(ui_press_test, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_press_test, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_press_test, -33);
-    lv_obj_set_y(ui_press_test, -101);
+    lv_obj_set_x(ui_press_test, -3);
+    lv_obj_set_y(ui_press_test, -100);
     lv_obj_set_align(ui_press_test, LV_ALIGN_CENTER);
     lv_label_set_text(ui_press_test, "1111.11");
     lv_obj_set_style_text_color(ui_press_test, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -207,7 +207,7 @@ void ui_Screen5_screen_init(void)
     ui_hum_test = lv_label_create(ui_Screen5);
     lv_obj_set_width(ui_hum_test, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_hum_test, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_hum_test, -7);
+    lv_obj_set_x(ui_hum_test, -5);
     lv_obj_set_y(ui_hum_test, 149);
     lv_obj_set_align(ui_hum_test, LV_ALIGN_CENTER);
     lv_label_set_text(ui_hum_test, "33.33");
@@ -229,8 +229,8 @@ void ui_Screen5_screen_init(void)
     ui_temp_test = lv_label_create(ui_Screen5);
     lv_obj_set_width(ui_temp_test, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_temp_test, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_temp_test, -161);
-    lv_obj_set_y(ui_temp_test, 38);
+    lv_obj_set_x(ui_temp_test, -139);
+    lv_obj_set_y(ui_temp_test, 40);
     lv_obj_set_align(ui_temp_test, LV_ALIGN_CENTER);
     lv_label_set_text(ui_temp_test, "11.11");
     lv_obj_set_style_text_color(ui_temp_test, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -251,8 +251,8 @@ void ui_Screen5_screen_init(void)
     ui_alti_test = lv_label_create(ui_Screen5);
     lv_obj_set_width(ui_alti_test, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_alti_test, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_alti_test, 119);
-    lv_obj_set_y(ui_alti_test, 38);
+    lv_obj_set_x(ui_alti_test, 136);
+    lv_obj_set_y(ui_alti_test, 40);
     lv_obj_set_align(ui_alti_test, LV_ALIGN_CENTER);
     lv_label_set_text(ui_alti_test, "11.11");
     lv_obj_set_style_text_color(ui_alti_test, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);

@@ -87,7 +87,6 @@ lv_obj_t * ui_weathermax7 = NULL;
 lv_obj_t * ui_city2 = NULL;
 lv_obj_t * ui_week2 = NULL;
 lv_obj_t * ui_year2 = NULL;
-lv_obj_t * ui_Label1 = NULL;
 // event funtions
 void ui_event_weather2(lv_event_t * e)
 {
@@ -96,6 +95,10 @@ void ui_event_weather2(lv_event_t * e)
     if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT) {
         lv_indev_wait_release(lv_indev_get_act());
         _ui_screen_change(&ui_Screen1, LV_SCR_LOAD_ANIM_FADE_ON, 300, 0, &ui_Screen1_screen_init);
+    }
+    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM) {
+        lv_indev_wait_release(lv_indev_get_act());
+        _ui_screen_change(&ui_weather, LV_SCR_LOAD_ANIM_FADE_ON, 300, 0, &ui_weather_screen_init);
     }
 }
 
@@ -189,7 +192,7 @@ void ui_weather2_screen_init(void)
     lv_obj_set_style_text_font(ui_weathertime2, &ui_font_chinese, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_weathertype2 = lv_img_create(ui_Panel8);
-    lv_img_set_src(ui_weathertype2, &ui_img_weather_sun_cloud_png);
+    lv_img_set_src(ui_weathertype2, &ui_img_weather_sun_png);
     lv_obj_set_width(ui_weathertype2, 37);
     lv_obj_set_height(ui_weathertype2, 31);
     lv_obj_set_align(ui_weathertype2, LV_ALIGN_CENTER);
@@ -231,7 +234,7 @@ void ui_weather2_screen_init(void)
     lv_obj_set_style_text_font(ui_weathertime3, &ui_font_chinese, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_weathertype3 = lv_img_create(ui_Panel9);
-    lv_img_set_src(ui_weathertype3, &ui_img_weather_sun_cloud_png);
+    lv_img_set_src(ui_weathertype3, &ui_img_weather_cloud_fog_png);
     lv_obj_set_width(ui_weathertype3, 37);
     lv_obj_set_height(ui_weathertype3, 31);
     lv_obj_set_align(ui_weathertype3, LV_ALIGN_CENTER);
@@ -273,7 +276,7 @@ void ui_weather2_screen_init(void)
     lv_obj_set_style_text_font(ui_weathertime4, &ui_font_chinese, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_weathertype4 = lv_img_create(ui_Panel10);
-    lv_img_set_src(ui_weathertype4, &ui_img_weather_sun_cloud_png);
+    lv_img_set_src(ui_weathertype4, &ui_img_weather_cloud_png);
     lv_obj_set_width(ui_weathertype4, 37);
     lv_obj_set_height(ui_weathertype4, 31);
     lv_obj_set_align(ui_weathertype4, LV_ALIGN_CENTER);
@@ -981,17 +984,6 @@ void ui_weather2_screen_init(void)
     lv_obj_set_style_text_opa(ui_year2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_year2, &ui_font_chinese, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_Label1 = lv_label_create(ui_weather2);
-    lv_obj_set_width(ui_Label1, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Label1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Label1, 0);
-    lv_obj_set_y(ui_Label1, 50);
-    lv_obj_set_align(ui_Label1, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Label1, "未来七天天气");
-    lv_obj_set_style_text_color(ui_Label1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_Label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_Label1, &ui_font_chinese, LV_PART_MAIN | LV_STATE_DEFAULT);
-
     lv_obj_add_event_cb(ui_weather2, ui_event_weather2, LV_EVENT_ALL, NULL);
 
 }
@@ -1083,6 +1075,5 @@ void ui_weather2_screen_destroy(void)
     ui_city2 = NULL;
     ui_week2 = NULL;
     ui_year2 = NULL;
-    ui_Label1 = NULL;
 
 }

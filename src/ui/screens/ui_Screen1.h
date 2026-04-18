@@ -30,6 +30,8 @@ extern lv_obj_t * ui_heart_button;
 extern lv_obj_t * ui_Arc9;
 extern void ui_event_button(lv_event_t * e);
 extern lv_obj_t * ui_button;
+extern lv_obj_t * ui_weather_icon;
+extern lv_obj_t * ui_maintemp;
 extern lv_obj_t * ui_spo2_arc;
 extern lv_obj_t * ui_spo2_label;
 extern lv_obj_t * ui_spo2_image;
