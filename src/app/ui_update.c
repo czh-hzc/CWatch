@@ -120,6 +120,26 @@ static void ui_update_timer_cb(lv_timer_t * timer)
         lv_label_set_text(ui_min, buf);
         snprintf(buf, sizeof(buf), "%s", week_str[weekday]);
         lv_label_set_text(ui_week, buf);
+        snprintf(buf, sizeof(buf), "%d°", local_cur_temp);
+        lv_label_set_text(ui_maintemp, buf);
+        switch (local_weather_type)
+        {
+            case 0x00:
+                lv_img_set_src(ui_weather_icon, &ui_img_weather_sun_png);
+                break;
+            case 0x01:
+                lv_img_set_src(ui_weather_icon, &ui_img_weather_sun_cloud_png);
+                break;
+            case 0x02:
+                lv_img_set_src(ui_weather_icon, &ui_img_weather_cloud_png);
+                break;
+            case 0x03:
+                lv_img_set_src(ui_weather_icon, &ui_img_weather_rain_png);
+                break;
+            default:
+                lv_img_set_src(ui_weather_icon, &ui_img_weather_sun_png);
+                break;
+        }
         if (battery_ret == RT_EOK)
         {
             snprintf(buf, sizeof(buf), "%u%%", battery_info.percent);
@@ -265,13 +285,13 @@ static void ui_update_timer_cb(lv_timer_t * timer)
                     lv_img_set_src(icon_imgs[i], &ui_img_weather_sun_png);
                     break;
                 case 0x01: // 多云
-                    lv_img_set_src(icon_imgs[i], &ui_img_weather_cloud_png);
+                    lv_img_set_src(icon_imgs[i], &ui_img_weather_sun_cloud_png);
                     break;
                 case 0x02: // 阴天
                     lv_img_set_src(icon_imgs[i], &ui_img_weather_cloud_png);
                     break;
                 case 0x03: // 雨天
-                    lv_img_set_src(icon_imgs[i], &ui_img_weather_cloud_png);
+                    lv_img_set_src(icon_imgs[i], &ui_img_weather_rain_png);
                     break;
                 // case 0x04: // 雷雨
                 //     lv_img_set_src(icon_imgs[i], &ui_img_wthunder_png);
