@@ -25,7 +25,6 @@ extern lv_obj_t * ui_Panel5;
 extern lv_obj_t * ui_heart_image2;
 extern lv_obj_t * ui_heart_rate;
 extern lv_obj_t * ui_bpm;
-extern lv_obj_t * ui_measuring;
 // CUSTOM VARIABLES
 
 #ifdef __cplusplus

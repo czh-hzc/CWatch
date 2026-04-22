@@ -18,7 +18,7 @@ SET(SOURCES screens/ui_Screen1.c
     images/ui_img_wave2_png.c
     images/ui_img_wave1_png.c
     images/ui_img_heart_png.c
-    images/ui_img_compass1_png.c
+    images/ui_img_chatgpt_image1_png.c
     images/ui_img_clockwise_sec_png.c
     images/ui_img_gemini_generated_image_fdcqbnfdcqbnfdcq_png.c
     images/ui_img_altitude_png.c

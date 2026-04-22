@@ -50,7 +50,7 @@ LV_IMG_DECLARE(ui_img_hot_png);    // assets/hot.png
 LV_IMG_DECLARE(ui_img_wave2_png);    // assets/wave2.png
 LV_IMG_DECLARE(ui_img_wave1_png);    // assets/wave1.png
 LV_IMG_DECLARE(ui_img_heart_png);    // assets/heart.png
-LV_IMG_DECLARE(ui_img_compass1_png);    // assets/compass1.png
+LV_IMG_DECLARE(ui_img_chatgpt_image1_png);    // assets/ChatGPT Image1.png
 LV_IMG_DECLARE(ui_img_clockwise_sec_png);    // assets/clockwise_sec.png
 LV_IMG_DECLARE(
     ui_img_gemini_generated_image_fdcqbnfdcqbnfdcq_png);    // assets/Gemini_Generated_Image_fdcqbnfdcqbnfdcq.png
@@ -70,7 +70,6 @@ LV_IMG_DECLARE(ui_img_setting_png);
 LV_IMG_DECLARE(ui_img_env_png);
 LV_IMG_DECLARE(ui_img_wrain_png);
 LV_IMG_DECLARE(ui_img_wcloud_png);
-
 // FONTS
 LV_FONT_DECLARE(ui_font_chinese);
 LV_FONT_DECLARE(ui_font_chinese2);

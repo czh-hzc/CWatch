@@ -16,7 +16,6 @@ lv_obj_t * ui_Panel5 = NULL;
 lv_obj_t * ui_heart_image2 = NULL;
 lv_obj_t * ui_heart_rate = NULL;
 lv_obj_t * ui_bpm = NULL;
-lv_obj_t * ui_measuring = NULL;
 // event funtions
 void ui_event_Screen2(lv_event_t * e)
 {
@@ -33,7 +32,7 @@ void ui_event_Screen2(lv_event_t * e)
     }
     if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT) {
         lv_indev_wait_release(lv_indev_get_act());
-        _ui_screen_change(&ui_Screen1, LV_SCR_LOAD_ANIM_FADE_ON, 350, 0, &ui_Screen1_screen_init);
+        _ui_screen_change(&ui_Screen1, LV_SCR_LOAD_ANIM_FADE_ON, 150, 0, &ui_Screen1_screen_init);
     }
 }
 
@@ -175,19 +174,6 @@ void ui_Screen2_screen_init(void)
     lv_obj_set_style_text_opa(ui_bpm, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_bpm, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_measuring = lv_label_create(ui_Panel5);
-    lv_obj_set_width(ui_measuring, 227);
-    lv_obj_set_height(ui_measuring, 29);
-    lv_obj_set_x(ui_measuring, -8);
-    lv_obj_set_y(ui_measuring, -16);
-    lv_obj_set_align(ui_measuring, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_measuring, "        Measuring...");
-    lv_obj_set_style_text_color(ui_measuring, lv_color_hex(0x6A6D6A), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_measuring, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_measuring, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_width(ui_measuring, 1, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_side(ui_measuring, LV_BORDER_SIDE_TOP, LV_PART_MAIN | LV_STATE_DEFAULT);
-
     lv_obj_add_event_cb(ui_Screen2, ui_event_Screen2, LV_EVENT_ALL, NULL);
 
 }
@@ -208,6 +194,5 @@ void ui_Screen2_screen_destroy(void)
     ui_heart_image2 = NULL;
     ui_heart_rate = NULL;
     ui_bpm = NULL;
-    ui_measuring = NULL;
 
 }
