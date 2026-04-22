@@ -172,6 +172,7 @@ static void ui_update_timer_cb(lv_timer_t * timer)
 
         snprintf(buf, sizeof(buf), "%d°", (int)heading);
         lv_label_set_text(ui_Label5, buf);
+        lv_label_set_text(ui_Label2, Compass_GetDirectionText(heading));
     }
     else if (current_screen == ui_Screen5) 
     {

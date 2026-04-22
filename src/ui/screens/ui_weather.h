@@ -17,7 +17,6 @@ extern void ui_event_weather(lv_event_t * e);
 extern lv_obj_t * ui_weather;
 extern lv_obj_t * ui_weathertemp;
 extern lv_obj_t * ui_weather_image;
-extern lv_obj_t * ui_weathertemp1;
 extern lv_obj_t * ui_city;
 extern lv_obj_t * ui_weathernow;
 extern lv_obj_t * ui_weathermin;

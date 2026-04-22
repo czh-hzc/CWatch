@@ -171,6 +171,28 @@ void Compass_Reset(void)
     rt_memset(&g_compass, 0, sizeof(g_compass));
 }
 
+const char *Compass_GetDirectionText(float heading_deg)
+{
+    static const char *direction_text[] =
+    {
+        "\xE5\x8C\x97",
+        "\xE4\xB8\x9C\xE5\x8C\x97",
+        "\xE4\xB8\x9C",
+        "\xE4\xB8\x9C\xE5\x8D\x97",
+        "\xE5\x8D\x97",
+        "\xE8\xA5\xBF\xE5\x8D\x97",
+        "\xE8\xA5\xBF",
+        "\xE8\xA5\xBF\xE5\x8C\x97",
+    };
+    int index;
+
+    heading_deg = compass_wrap_360(heading_deg);
+    index = (int)((heading_deg + 22.5f) / 45.0f);
+    index &= 0x07;
+
+    return direction_text[index];
+}
+
 #if 0
 float Compass_Calculate(float ax, float ay, float az, float mx, float my, float mz)
 {

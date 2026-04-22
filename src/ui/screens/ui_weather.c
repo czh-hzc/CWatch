@@ -8,7 +8,6 @@
 lv_obj_t * ui_weather = NULL;
 lv_obj_t * ui_weathertemp = NULL;
 lv_obj_t * ui_weather_image = NULL;
-lv_obj_t * ui_weathertemp1 = NULL;
 lv_obj_t * ui_city = NULL;
 lv_obj_t * ui_weathernow = NULL;
 lv_obj_t * ui_weathermin = NULL;
@@ -40,11 +39,11 @@ void ui_weather_screen_init(void)
     ui_weathertemp = lv_label_create(ui_weather);
     lv_obj_set_width(ui_weathertemp, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_weathertemp, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_weathertemp, -97);
+    lv_obj_set_x(ui_weathertemp, -83);
     lv_obj_set_y(ui_weathertemp, -10);
     lv_obj_set_align(ui_weathertemp, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_weathertemp, "40");
-    lv_obj_set_style_text_color(ui_weathertemp, lv_color_hex(0xEE1E1E), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_label_set_text(ui_weathertemp, "40°");
+    lv_obj_set_style_text_color(ui_weathertemp, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_weathertemp, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_weathertemp, &ui_font_large_promax, LV_PART_MAIN | LV_STATE_DEFAULT);
 
@@ -57,17 +56,6 @@ void ui_weather_screen_init(void)
     lv_obj_set_align(ui_weather_image, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_weather_image, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_weather_image, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-
-    ui_weathertemp1 = lv_label_create(ui_weather);
-    lv_obj_set_width(ui_weathertemp1, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_weathertemp1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_weathertemp1, -3);
-    lv_obj_set_y(ui_weathertemp1, -24);
-    lv_obj_set_align(ui_weathertemp1, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_weathertemp1, "°");
-    lv_obj_set_style_text_color(ui_weathertemp1, lv_color_hex(0xEE1E1E), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_weathertemp1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_weathertemp1, &ui_font_large_promax, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_city = lv_label_create(ui_weather);
     lv_obj_set_width(ui_city, LV_SIZE_CONTENT);   /// 1
@@ -125,7 +113,6 @@ void ui_weather_screen_destroy(void)
     ui_weather = NULL;
     ui_weathertemp = NULL;
     ui_weather_image = NULL;
-    ui_weathertemp1 = NULL;
     ui_city = NULL;
     ui_weathernow = NULL;
     ui_weathermin = NULL;
