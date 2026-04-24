@@ -4,6 +4,7 @@ SET(SOURCES screens/ui_Screen1.c
     screens/ui_Screen5.c
     screens/ui_Screen6.c
     screens/ui_Screen7.c
+    screens/ui_about.c
     screens/ui_weather.c
     screens/ui_weather2.c
     ui.c
@@ -30,6 +31,10 @@ SET(SOURCES screens/ui_Screen1.c
     images/ui_img_weather_sun_png.c
     images/ui_img_weather_cloud_fog_png.c
     images/ui_img_weather_cloud_png.c
+    images/zhendong1.c
+    images/zhendong2.c
+    images/guanyu.c
+    images/liangdu.c
     fonts/ui_font_chinese.c
     fonts/ui_font_chinese2.c
     fonts/ui_font_large.c

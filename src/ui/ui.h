@@ -24,6 +24,7 @@ extern "C" {
 #include "screens/ui_Screen5.h"
 #include "screens/ui_Screen6.h"
 #include "screens/ui_Screen7.h"
+#include "screens/ui_about.h"
 #include "screens/ui_weather.h"
 #include "screens/ui_weather2.h"
 
@@ -70,6 +71,10 @@ LV_IMG_DECLARE(ui_img_setting_png);
 LV_IMG_DECLARE(ui_img_env_png);
 LV_IMG_DECLARE(ui_img_wrain_png);
 LV_IMG_DECLARE(ui_img_wcloud_png);
+LV_IMG_DECLARE(zhendong1);
+LV_IMG_DECLARE(zhendong2);
+LV_IMG_DECLARE(guanyu);
+LV_IMG_DECLARE(liangdu);
 // FONTS
 LV_FONT_DECLARE(ui_font_chinese);
 LV_FONT_DECLARE(ui_font_chinese2);
