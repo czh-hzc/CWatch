@@ -129,8 +129,8 @@ static void honeycomb_scroll_cb(lv_event_t * e)
         point_final.x += vect.x;
         point_final.y += vect.y;
 
-        update_icon_positions();
-    }
+            update_icon_positions();
+        }
 
     // 【阶段 2】：手指松开屏幕 (或者滑动出屏幕意外丢失焦点)
     else if (code == LV_EVENT_RELEASED || code == LV_EVENT_PRESS_LOST) 
@@ -141,79 +141,79 @@ static void honeycomb_scroll_cb(lv_event_t * e)
             switch(icon_index)
             {
                 case 0: // 环境监测
-                    _ui_screen_change(&ui_Screen5, LV_SCR_LOAD_ANIM_FADE_OUT, 300, 0, &ui_Screen5_screen_init);
+                    _ui_screen_change(&ui_Screen5, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen5_screen_init);
                     break;
                 case 1: // 设置
-                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen7_screen_init);
+                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen7_screen_init);
                     break;
                 case 2: // 手电筒
-                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen7_screen_init);
+                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen7_screen_init);
                     break;
                 case 3: // 罗盘
-                    _ui_screen_change(&ui_Screen3, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen3_screen_init);
+                    _ui_screen_change(&ui_Screen3, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen3_screen_init);
                     break;
                 case 4: // 心率
-                    _ui_screen_change(&ui_Screen2, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen2_screen_init);
+                    _ui_screen_change(&ui_Screen2, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen2_screen_init);
                     break;
                 case 5: // 环境监测
-                    _ui_screen_change(&ui_Screen5, LV_SCR_LOAD_ANIM_FADE_OUT, 300, 0, &ui_Screen5_screen_init);
+                    _ui_screen_change(&ui_Screen5, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen5_screen_init);
                     break;
                 case 6: // 设置
-                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen7_screen_init);
+                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen7_screen_init);
                     break;
                 case 7: // 手电筒
-                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen7_screen_init);
+                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen7_screen_init);
                     break;
                 case 8: // 罗盘
-                    _ui_screen_change(&ui_Screen3, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen3_screen_init);
+                    _ui_screen_change(&ui_Screen3, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen3_screen_init);
                     break;
                 case 9: // 心率
-                    _ui_screen_change(&ui_Screen2, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen2_screen_init);
+                    _ui_screen_change(&ui_Screen2, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen2_screen_init);
                     break;
                 case 10: // 环境监测
-                    _ui_screen_change(&ui_Screen5, LV_SCR_LOAD_ANIM_FADE_OUT, 300, 0, &ui_Screen5_screen_init);
+                    _ui_screen_change(&ui_Screen5, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen5_screen_init);
                     break;
                 case 11: // 设置
-                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen7_screen_init);
+                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen7_screen_init);
                     break;
                 case 12: // 手电筒
-                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen7_screen_init);
+                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen7_screen_init);
                     break;
                 case 13: // 罗盘
-                    _ui_screen_change(&ui_Screen3, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen3_screen_init);
+                    _ui_screen_change(&ui_Screen3, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen3_screen_init);
                     break;
                 case 14: // 心率
-                    _ui_screen_change(&ui_Screen2, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen2_screen_init);
+                    _ui_screen_change(&ui_Screen2, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen2_screen_init);
                     break;
                 case 15: // 环境监测
-                    _ui_screen_change(&ui_Screen5, LV_SCR_LOAD_ANIM_FADE_OUT, 300, 0, &ui_Screen5_screen_init);
+                    _ui_screen_change(&ui_Screen5, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen5_screen_init);
                     break;
                 case 16: // 设置
-                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen7_screen_init);
+                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen7_screen_init);
                     break;
                 case 17: // 手电筒
-                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen7_screen_init);
+                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen7_screen_init);
                     break;
                 case 18: // 罗盘
-                    _ui_screen_change(&ui_Screen3, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen3_screen_init);
+                    _ui_screen_change(&ui_Screen3, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen3_screen_init);
                     break;
                 case 19: // 心率
-                    _ui_screen_change(&ui_Screen2, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen2_screen_init);
+                    _ui_screen_change(&ui_Screen2, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen2_screen_init);
                     break;
                 case 20: // 环境监测
-                    _ui_screen_change(&ui_Screen5, LV_SCR_LOAD_ANIM_FADE_OUT, 300, 0, &ui_Screen5_screen_init);
+                    _ui_screen_change(&ui_Screen5, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen5_screen_init);
                     break;
                 case 21: // 设置
-                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen7_screen_init);
+                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen7_screen_init);
                     break;
                 case 22: // 手电筒
-                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen7_screen_init);
+                    _ui_screen_change(&ui_Screen7, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen7_screen_init);
                     break;
                 case 23: // 罗盘
-                    _ui_screen_change(&ui_Screen3, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen3_screen_init);
+                    _ui_screen_change(&ui_Screen3, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen3_screen_init);
                     break;
                 case 24: // 心率
-                    _ui_screen_change(&ui_Screen2, LV_SCR_LOAD_ANIM_FADE_OUT, 500, 0, &ui_Screen2_screen_init);
+                    _ui_screen_change(&ui_Screen2, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen2_screen_init);
                     break;
             }
             return; // 没有拖动就直接返回，不启动回弹动画

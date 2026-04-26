@@ -43,7 +43,7 @@ void ui_event_button2(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Screen6, LV_SCR_LOAD_ANIM_FADE_OUT, 150, 0, &ui_Screen6_screen_init);
+        _ui_screen_change(&ui_Screen6, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen6_screen_init);
     }
 }
 
@@ -52,7 +52,7 @@ void ui_event_heart_button(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Screen2, LV_SCR_LOAD_ANIM_NONE, 150, 0, &ui_Screen2_screen_init);
+        _ui_screen_change(&ui_Screen2, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen2_screen_init);
     }
 }
 
@@ -61,7 +61,7 @@ void ui_event_button(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_weather, LV_SCR_LOAD_ANIM_FADE_ON, 150, 0, &ui_weather_screen_init);
+        _ui_screen_change(&ui_weather, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_weather_screen_init);
     }
 }
 
@@ -70,7 +70,7 @@ void ui_event_spo2_button(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Screen3, LV_SCR_LOAD_ANIM_FADE_ON, 150, 0, &ui_Screen3_screen_init);
+        _ui_screen_change(&ui_Screen3, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen3_screen_init);
     }
 }
 

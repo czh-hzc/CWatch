@@ -94,11 +94,11 @@ void ui_event_weather2(lv_event_t * e)
 
     if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT) {
         lv_indev_wait_release(lv_indev_get_act());
-        _ui_screen_change(&ui_Screen1, LV_SCR_LOAD_ANIM_FADE_ON, 150, 0, &ui_Screen1_screen_init);
+        _ui_screen_change(&ui_Screen1, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen1_screen_init);
     }
     if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM) {
         lv_indev_wait_release(lv_indev_get_act());
-        _ui_screen_change(&ui_weather, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 150, 0, &ui_weather_screen_init);
+        _ui_screen_change(&ui_weather, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 100, 0, &ui_weather_screen_init);
     }
 }
 

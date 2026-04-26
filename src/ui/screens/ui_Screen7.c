@@ -119,7 +119,7 @@ void ui_event_Screen7(lv_event_t * e)
 
     if(event_code == LV_EVENT_GESTURE && lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT) {
         lv_indev_wait_release(lv_indev_get_act());
-        _ui_screen_change(&ui_Screen1, LV_SCR_LOAD_ANIM_FADE_OUT, 150, 0, &ui_Screen1_screen_init);
+        _ui_screen_change(&ui_Screen1, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen1_screen_init);
     }
 
     if(event_code == LV_EVENT_SCREEN_LOAD_START && ui_setting_list) {
@@ -140,14 +140,14 @@ static void ui_setting_item_event(lv_event_t * e)
 
     if(event_code == LV_EVENT_GESTURE && lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT) {
         lv_indev_wait_release(lv_indev_get_act());
-        _ui_screen_change(&ui_Screen1, LV_SCR_LOAD_ANIM_FADE_OUT, 150, 0, &ui_Screen1_screen_init);
+        _ui_screen_change(&ui_Screen1, LV_SCR_LOAD_ANIM_FADE_ON, 100, 0, &ui_Screen1_screen_init);
     }
 
     if(event_code == LV_EVENT_CLICKED) {
         ui_setting_action_t action = (ui_setting_action_t)(intptr_t)lv_event_get_user_data(e);
 
         if(action == UI_SETTING_ACTION_ABOUT) {
-            _ui_screen_change(&ui_about, LV_SCR_LOAD_ANIM_MOVE_LEFT, 150, 0, &ui_about_screen_init);
+            _ui_screen_change(&ui_about, LV_SCR_LOAD_ANIM_MOVE_LEFT, 100, 0, &ui_about_screen_init);
         }
     }
 }
