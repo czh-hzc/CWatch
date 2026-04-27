@@ -50,14 +50,15 @@ static void sensor_thread_entry(void *parameter)
 
         if(run_env)
         {
-            float temp, press, hum;
-            if(BME280_getdata(&temp, &press, &hum) == 1)
+            float temp, press, hum, altitude;
+            if(BME280_getdata(&temp, &press, &hum, &altitude) == 1)
             {
                 if(rt_mutex_take(data_mutex, RT_WAITING_FOREVER) == RT_EOK)
                 {
                     system_data.temperature = temp;
                     system_data.pressure = press;
                     system_data.humidity = hum;
+                    system_data.altitude = altitude;
                     rt_mutex_release(data_mutex);
                 }
             }

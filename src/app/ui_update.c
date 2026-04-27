@@ -30,7 +30,7 @@ static void ui_update_timer_cb(lv_timer_t * timer)
     rt_uint16_t year; 
     rt_uint8_t month, day, hour, minute, second, weekday;
     int local_heart_rate = 0, local_spo2 = 0;
-    float local_temp = 0, local_press = 0, local_hum = 0;
+    float local_temp = 0, local_press = 0, local_hum = 0, local_altitude = 0;
     float local_ax = 0, local_ay = 0, local_az = 0;
     float local_gx = 0, local_gy = 0, local_gz = 0;
     float local_mx = 0, local_my = 0, local_mz = 0;
@@ -73,6 +73,7 @@ static void ui_update_timer_cb(lv_timer_t * timer)
         local_temp = system_data.temperature;
         local_press = system_data.pressure;
         local_hum = system_data.humidity;
+        local_altitude = system_data.altitude;
         
         local_ax = system_data.acc_x; local_ay = system_data.acc_y; local_az = system_data.acc_z;
         local_gx = system_data.gyro_x; local_gy = system_data.gyro_y; local_gz = system_data.gyro_z;
@@ -176,12 +177,14 @@ static void ui_update_timer_cb(lv_timer_t * timer)
     }
     else if (current_screen == ui_Screen5) 
     {
-        snprintf(buf, sizeof(buf), "%df°", (int)local_temp);
+        snprintf(buf, sizeof(buf), "%d°", (int)local_temp);
         lv_label_set_text(ui_temp_test, buf);
-        snprintf(buf, sizeof(buf), "%dfhpa", (int)local_press);
+        snprintf(buf, sizeof(buf), "%dhpa", (int)local_press);
         lv_label_set_text(ui_press_test, buf);
         snprintf(buf, sizeof(buf), "%d%%", (int)local_hum);
         lv_label_set_text(ui_hum_test, buf);
+        snprintf(buf, sizeof(buf), "%dm", (int)local_altitude);
+        lv_label_set_text(ui_alti_test, buf);
     
     }
     else if (current_screen == ui_weather) 

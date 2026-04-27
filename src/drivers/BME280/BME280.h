@@ -29,6 +29,6 @@ typedef struct {
 
 void BME280_readid(void);
 void BME280_init(void);
-rt_uint8_t BME280_getdata(float *out_temp, float *out_press, float *out_hum);
+rt_uint8_t BME280_getdata(float *out_temp, float *out_press, float *out_hum, float *out_altitude);
 
 #endif /*__BME280_H__*/

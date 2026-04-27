@@ -25,6 +25,7 @@ typedef struct
     float temperature;
     float pressure;
     float humidity;
+    float altitude;
 
     rt_int16_t mag_x;
     rt_int16_t mag_y;

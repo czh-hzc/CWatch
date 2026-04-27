@@ -4,6 +4,9 @@
 #include "sensor_i2c.h"
 #include "BME280.h"
 #include "BME280_regs.h"
+#include "math.h"
+
+#define BME280_SEA_LEVEL_PRESSURE_HPA  (1013.25f)
 
 bme280_calib_data_t bme280_calib;
 
@@ -142,7 +145,17 @@ rt_uint32_t bme280_compensate_H_int32(rt_int32_t adc_H)
     return (rt_uint32_t)(v_x1_u32r >> 12);
 }
 
-rt_uint8_t BME280_getdata(float *out_temp, float *out_press, float *out_hum)
+static float BME280_calc_altitude(float press_hpa)
+{
+    if (press_hpa <= 0.0f)
+    {
+        return 0.0f;
+    }
+
+    return 44330.0f * (1.0f - powf(press_hpa / BME280_SEA_LEVEL_PRESSURE_HPA, 0.1903f));
+}
+
+rt_uint8_t BME280_getdata(float *out_temp, float *out_press, float *out_hum, float *out_altitude)
 {
     rt_uint8_t buf[8];
     rt_int32_t raw_T, raw_P, raw_H;
@@ -164,14 +177,17 @@ rt_uint8_t BME280_getdata(float *out_temp, float *out_press, float *out_hum)
         float temp_f  = (float)comp_temp / 100.0f;
         float press_f = (float)comp_press / 256.0f / 100.0f;
         float hum_f   = (float)comp_hum / 1024.0f;
+        float altitude_f = BME280_calc_altitude(press_f);
 
         *out_temp = temp_f;
         *out_press = press_f;
         *out_hum = hum_f;
+        *out_altitude = altitude_f;
 
         rt_kprintf("  Temp  = %.2f degC\n", temp_f);
         rt_kprintf("  Press = %.2f hPa\n", press_f);
         rt_kprintf("  Hum   = %.2f %%RH\n", hum_f);
+        rt_kprintf("  Alt   = %.2f m\n", altitude_f);
 
         return 1;
     }
