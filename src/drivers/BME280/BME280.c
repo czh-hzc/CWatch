@@ -6,7 +6,9 @@
 #include "BME280_regs.h"
 #include "math.h"
 
-#define BME280_SEA_LEVEL_PRESSURE_HPA  (1013.25f)
+/* Local altitude calibration: sensor 1013 hPa, actual 1011 hPa, altitude 58 m. */
+#define BME280_ALTITUDE_PRESSURE_OFFSET_HPA     (-2.0f)
+#define BME280_ALTITUDE_SEA_LEVEL_PRESSURE_HPA  (1017.98f)
 
 bme280_calib_data_t bme280_calib;
 
@@ -147,12 +149,14 @@ rt_uint32_t bme280_compensate_H_int32(rt_int32_t adc_H)
 
 static float BME280_calc_altitude(float press_hpa)
 {
-    if (press_hpa <= 0.0f)
+    float altitude_press_hpa = press_hpa + BME280_ALTITUDE_PRESSURE_OFFSET_HPA;
+
+    if (altitude_press_hpa <= 0.0f)
     {
         return 0.0f;
     }
 
-    return 44330.0f * (1.0f - powf(press_hpa / BME280_SEA_LEVEL_PRESSURE_HPA, 0.1903f));
+    return 44330.0f * (1.0f - powf(altitude_press_hpa / BME280_ALTITUDE_SEA_LEVEL_PRESSURE_HPA, 0.1903f));
 }
 
 rt_uint8_t BME280_getdata(float *out_temp, float *out_press, float *out_hum, float *out_altitude)
