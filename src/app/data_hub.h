@@ -38,10 +38,13 @@ typedef struct
     float gyro_y;
     float gyro_z;
 
+    rt_uint32_t step_count;
+
     rt_uint8_t enable_heartrate;
     rt_uint8_t enable_environment;
     rt_uint8_t enable_mag;
     rt_uint8_t enable_imu;
+    rt_uint8_t enable_step;
     rt_uint8_t enable_rtc;
     rt_uint8_t enable_weather;
     rt_uint8_t enable_forecastweather; 

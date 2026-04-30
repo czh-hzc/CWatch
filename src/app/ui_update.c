@@ -9,6 +9,7 @@
 #include "battery_adc.h"
 
 #define UI_COMPASS_DIAL_OFFSET_DEG  (0.0f)
+#define UI_STEP_GOAL                 10000U
 
 static void ui_update_timer_cb(lv_timer_t * timer)
 {
@@ -30,6 +31,7 @@ static void ui_update_timer_cb(lv_timer_t * timer)
     rt_uint16_t year; 
     rt_uint8_t month, day, hour, minute, second, weekday;
     int local_heart_rate = 0, local_spo2 = 0;
+    rt_uint32_t local_step_count = 0;
     float local_temp = 0, local_press = 0, local_hum = 0, local_altitude = 0;
     float local_ax = 0, local_ay = 0, local_az = 0;
     float local_gx = 0, local_gy = 0, local_gz = 0;
@@ -47,11 +49,13 @@ static void ui_update_timer_cb(lv_timer_t * timer)
         system_data.enable_heartrate = 0;
         system_data.enable_mag = 0;
         system_data.enable_imu = 0;
+        system_data.enable_step = 0;
         system_data.enable_rtc = 0;
         
         if(current_screen == ui_Screen1)
         {
             system_data.enable_heartrate = 1;
+            system_data.enable_step = 1;
             system_data.enable_rtc = 1;
         }
         else if(current_screen == ui_Screen2)
@@ -70,6 +74,7 @@ static void ui_update_timer_cb(lv_timer_t * timer)
 
         local_heart_rate = system_data.heart_rate;
         local_spo2 = system_data.spo2;
+        local_step_count = system_data.step_count;
         local_temp = system_data.temperature;
         local_press = system_data.pressure;
         local_hum = system_data.humidity;
@@ -109,6 +114,11 @@ static void ui_update_timer_cb(lv_timer_t * timer)
         lv_label_set_text(ui_heart_label, buf);
         snprintf(buf, sizeof(buf), "%d", (int)local_spo2);
         lv_label_set_text(ui_spo2_label, buf);
+        snprintf(buf, sizeof(buf), "%lu", (unsigned long)local_step_count);
+        lv_label_set_text(ui_step_label, buf);
+        lv_arc_set_value(ui_step_arc, (int)((local_step_count >= UI_STEP_GOAL) ?
+                                            100U :
+                                            (local_step_count * 100U) / UI_STEP_GOAL));
         snprintf(buf, sizeof(buf), "%02d", year);
         lv_label_set_text(ui_year, buf);
         snprintf(buf, sizeof(buf), "%02d", month);

@@ -88,7 +88,7 @@ void ui_Screen1_screen_init(void)
     lv_obj_set_height(ui_step_arc, 420);
     lv_obj_set_align(ui_step_arc, LV_ALIGN_CENTER);
     lv_obj_clear_flag(ui_step_arc, LV_OBJ_FLAG_CLICKABLE);      /// Flags
-    lv_arc_set_value(ui_step_arc, 25);
+    lv_arc_set_value(ui_step_arc, 0);
     lv_arc_set_bg_angles(ui_step_arc, 15, 65);
     lv_arc_set_rotation(ui_step_arc, 270);
     lv_obj_set_style_arc_color(ui_step_arc, lv_color_hex(0x103C5A), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -385,7 +385,7 @@ void ui_Screen1_screen_init(void)
     lv_obj_set_x(ui_step_label, 100);
     lv_obj_set_y(ui_step_label, -110);
     lv_obj_set_align(ui_step_label, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_step_label, "6666");
+    lv_label_set_text(ui_step_label, "0");
     lv_obj_set_style_text_color(ui_step_label, lv_color_hex(0x2999E6), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_step_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_step_label, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
