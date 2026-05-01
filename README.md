@@ -181,6 +181,7 @@ scons
 
 - 不要手动修改 `project/build_CWatch_hcpu/` 下的构建产物
 - 新增传感器或页面时，优先复用 `system_data`、采集开关和 `ui_update.*` 的现有流程
+- 每次新增功能后，需要同步更新 `README.md`，说明新增功能、涉及模块以及使用或验证方式
 - 新增源文件后，确认 `src/SConscript` 的 `Glob` 路径能够覆盖该文件
 - 修改 BLE 协议时，需要同时更新 `src/app/ble_rx.c` 和 `CWatch_vxxcx/pages/index/index.js`
 - 经典蓝牙当前只是连接模板；若要实现真正音频播放，还需要继续补齐音频输出链路
