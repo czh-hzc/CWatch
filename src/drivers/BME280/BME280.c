@@ -11,6 +11,8 @@
 #define BME280_ALTITUDE_SEA_LEVEL_PRESSURE_HPA  (1017.98f)
 
 bme280_calib_data_t bme280_calib;
+static bme280_power_mode_t bme280_power_mode = BME280_POWER_MODE_OFF;
+static rt_bool_t bme280_power_mode_ready = RT_FALSE;
 
 void BME280_readid(void)
 {
@@ -52,7 +54,7 @@ void BME280_init(void)
     ctrl_value = (BME280_STANDBY_1000_MS << BME280_T_SB_POS) | (BME280_FILTER_COEFF_16 << BME280_FILTER_POS);//待机时间 0.5ms, IIR 滤波器系数 16
     sensor_i2c_writereg(BME280_I2C_ADDR_L, BME280_REG_CONFIG, ctrl_value);
 
-    ctrl_value = (BME280_OVERSAMP_2X << BME280_OSRS_T_POS) | (BME280_OVERSAMP_16X << BME280_OSRS_P_POS) | BME280_MODE_NORMAL;//温度过采样 x2, 气压过采样 x16, 正常模式
+    ctrl_value = (BME280_OVERSAMP_2X << BME280_OSRS_T_POS) | (BME280_OVERSAMP_16X << BME280_OSRS_P_POS) | BME280_MODE_SLEEP;//温度过采样 x2, 气压过采样 x16, 睡眠模式
     sensor_i2c_writereg(BME280_I2C_ADDR_L, BME280_REG_CTRL_MEAS, ctrl_value);
 
     sensor_i2c_readreg(BME280_I2C_ADDR_L, BME280_REG_CALIB_00, bme280_calib_buf, 26); // 读取 calib00...calib25
@@ -77,7 +79,59 @@ void BME280_init(void)
     bme280_calib.dig_H4 = (rt_int16_t)(bme280_calib_buf_h[3] << 4) | (bme280_calib_buf_h[4] & 0x0F);
     bme280_calib.dig_H5 = (rt_int16_t)(bme280_calib_buf_h[5] << 4) | (bme280_calib_buf_h[4] >> 4);
     bme280_calib.dig_H6 = (rt_int8_t)bme280_calib_buf_h[6]; // 0xE7 [cite: 530]
+    BME280_SetPowerMode(BME280_POWER_MODE_OFF);
 
+}
+
+rt_err_t BME280_SetPowerMode(bme280_power_mode_t mode)
+{
+    rt_uint8_t ctrl_value;
+
+    if(bme280_power_mode_ready && mode == bme280_power_mode)
+    {
+        return RT_EOK;
+    }
+
+    if(mode == BME280_POWER_MODE_ON)
+    {
+        ctrl_value = BME280_OVERSAMP_1X;
+        if(sensor_i2c_writereg(BME280_I2C_ADDR_L, BME280_REG_CTRL_HUM, ctrl_value) != RT_EOK)
+        {
+            return -RT_ERROR;
+        }
+
+        ctrl_value = (BME280_STANDBY_1000_MS << BME280_T_SB_POS) | (BME280_FILTER_COEFF_16 << BME280_FILTER_POS);
+        if(sensor_i2c_writereg(BME280_I2C_ADDR_L, BME280_REG_CONFIG, ctrl_value) != RT_EOK)
+        {
+            return -RT_ERROR;
+        }
+
+        ctrl_value = (BME280_OVERSAMP_2X << BME280_OSRS_T_POS) |
+                     (BME280_OVERSAMP_16X << BME280_OSRS_P_POS) |
+                     BME280_MODE_NORMAL;
+    }
+    else
+    {
+        mode = BME280_POWER_MODE_OFF;
+        ctrl_value = (BME280_OVERSAMP_2X << BME280_OSRS_T_POS) |
+                     (BME280_OVERSAMP_16X << BME280_OSRS_P_POS) |
+                     BME280_MODE_SLEEP;
+    }
+
+    if(sensor_i2c_writereg(BME280_I2C_ADDR_L, BME280_REG_CTRL_MEAS, ctrl_value) != RT_EOK)
+    {
+        return -RT_ERROR;
+    }
+
+    if(mode == BME280_POWER_MODE_ON)
+    {
+        rt_thread_mdelay(50);
+    }
+
+    bme280_power_mode = mode;
+    bme280_power_mode_ready = RT_TRUE;
+
+    return RT_EOK;
 }
 
 /* 全局变量，用于将高精度温度值传递给气压和湿度补偿公式  */

@@ -3,6 +3,12 @@
 
 #include "rtthread.h"
 
+typedef enum
+{
+    BME280_POWER_MODE_OFF = 0,
+    BME280_POWER_MODE_ON
+} bme280_power_mode_t;
+
 /* BME280 校准参数结构体 */
 typedef struct {
     rt_uint16_t dig_T1;
@@ -29,6 +35,7 @@ typedef struct {
 
 void BME280_readid(void);
 void BME280_init(void);
+rt_err_t BME280_SetPowerMode(bme280_power_mode_t mode);
 rt_uint8_t BME280_getdata(float *out_temp, float *out_press, float *out_hum, float *out_altitude);
 
 #endif /*__BME280_H__*/
