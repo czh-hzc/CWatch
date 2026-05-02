@@ -7,9 +7,12 @@
 #include "compass.h"
 #include "RTC_T.h"
 #include "battery_adc.h"
+#include "calorie_calculator.h"
+#include "heart_sensor_power.h"
 
 #define UI_COMPASS_DIAL_OFFSET_DEG  (0.0f)
 #define UI_STEP_GOAL                 10000U
+#define UI_CALORIE_GOAL              400U
 
 static void ui_update_timer_cb(lv_timer_t * timer)
 {
@@ -32,6 +35,7 @@ static void ui_update_timer_cb(lv_timer_t * timer)
     rt_uint8_t month, day, hour, minute, second, weekday;
     int local_heart_rate = 0, local_spo2 = 0;
     rt_uint32_t local_step_count = 0;
+    rt_uint32_t local_calorie = 0;
     float local_temp = 0, local_press = 0, local_hum = 0, local_altitude = 0;
     float local_ax = 0, local_ay = 0, local_az = 0;
     float local_gx = 0, local_gy = 0, local_gz = 0;
@@ -46,7 +50,7 @@ static void ui_update_timer_cb(lv_timer_t * timer)
     if(rt_mutex_take(data_mutex, RT_WAITING_FOREVER) == RT_EOK)
     {
         system_data.enable_environment = 0;
-        system_data.enable_heartrate = 0;
+        HeartSensorPower_SetRequest(&system_data, HEART_SENSOR_POWER_OFF);
         system_data.enable_mag = 0;
         system_data.enable_imu = 0;
         system_data.enable_step = 0;
@@ -54,13 +58,13 @@ static void ui_update_timer_cb(lv_timer_t * timer)
         
         if(current_screen == ui_Screen1)
         {
-            system_data.enable_heartrate = 1;
+            HeartSensorPower_SetRequest(&system_data, HEART_SENSOR_POWER_LOW);
             system_data.enable_step = 1;
             system_data.enable_rtc = 1;
         }
         else if(current_screen == ui_Screen2)
         {
-            system_data.enable_heartrate = 1;
+            HeartSensorPower_SetRequest(&system_data, HEART_SENSOR_POWER_NORMAL);
         }
         else if(current_screen == ui_Screen3)
         {
@@ -119,6 +123,12 @@ static void ui_update_timer_cb(lv_timer_t * timer)
         lv_arc_set_value(ui_step_arc, (int)((local_step_count >= UI_STEP_GOAL) ?
                                             100U :
                                             (local_step_count * 100U) / UI_STEP_GOAL));
+        local_calorie = CalorieCalculator_CalculateBySteps(local_step_count);
+        snprintf(buf, sizeof(buf), "%lu", (unsigned long)local_calorie);
+        lv_label_set_text(ui_hot_label, buf);
+        lv_arc_set_value(ui_hot_arc, (int)((local_calorie >= UI_CALORIE_GOAL) ?
+                                           100U :
+                                           (local_calorie * 100U) / UI_CALORIE_GOAL));
         snprintf(buf, sizeof(buf), "%02d", year);
         lv_label_set_text(ui_year, buf);
         snprintf(buf, sizeof(buf), "%02d", month);

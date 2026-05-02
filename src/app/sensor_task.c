@@ -7,6 +7,7 @@
 #include "MAX30102.h"
 #include "RTC_T.h"
 #include "step_counter.h"
+#include "heart_sensor_power.h"
 
 static rt_thread_t sensor_thread = RT_NULL;
 
@@ -22,15 +23,22 @@ static void sensor_thread_entry(void *parameter)
     while (1)
     {
         rt_uint8_t run_heart = 0, run_env = 0, run_mag = 0, run_imu = 0, run_step = 0, run_rtc = 0;
+        rt_uint8_t heart_power_mode = HEART_SENSOR_POWER_OFF;
         if(rt_mutex_take(data_mutex, RT_WAITING_FOREVER) == RT_EOK)
         {
             run_heart = system_data.enable_heartrate;
+            heart_power_mode = system_data.heartrate_power_mode;
             run_env = system_data.enable_environment;
             run_mag = system_data.enable_mag;
             run_imu = system_data.enable_imu;
             run_step = system_data.enable_step;
             run_rtc = system_data.enable_rtc;
             rt_mutex_release(data_mutex);
+        }
+
+        if(HeartSensorPower_ApplyMode((heart_sensor_power_mode_t)heart_power_mode) != RT_EOK)
+        {
+            run_heart = 0;
         }
 
         if(run_heart)

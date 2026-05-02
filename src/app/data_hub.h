@@ -41,6 +41,7 @@ typedef struct
     rt_uint32_t step_count;
 
     rt_uint8_t enable_heartrate;
+    rt_uint8_t heartrate_power_mode;
     rt_uint8_t enable_environment;
     rt_uint8_t enable_mag;
     rt_uint8_t enable_imu;
