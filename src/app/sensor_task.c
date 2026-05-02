@@ -8,6 +8,7 @@
 #include "RTC_T.h"
 #include "step_counter.h"
 #include "heart_sensor_power.h"
+#include "mag_sensor_power.h"
 
 static rt_thread_t sensor_thread = RT_NULL;
 
@@ -39,6 +40,10 @@ static void sensor_thread_entry(void *parameter)
         if(HeartSensorPower_ApplyMode((heart_sensor_power_mode_t)heart_power_mode) != RT_EOK)
         {
             run_heart = 0;
+        }
+        if(MagSensorPower_Apply(run_mag) != RT_EOK)
+        {
+            run_mag = 0;
         }
 
         if(run_heart)

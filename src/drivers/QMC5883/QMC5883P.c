@@ -15,6 +15,9 @@
 #define QMC_LOG(...) do { } while (0)
 #endif
 
+static qmc5883p_power_mode_t qmc5883p_power_mode = QMC5883P_POWER_MODE_OFF;
+static rt_bool_t qmc5883p_power_mode_ready = RT_FALSE;
+
 void QMC5883P_readid(void)
 {
     rt_uint8_t id;
@@ -52,9 +55,46 @@ void QMC5883P_init(void)
     ctrl_value = QMC5883P_SET_RESET_ON | QMC5883P_RNG_8G;//Set/Reset 开启，量程 ±8G
     sensor_i2c_writereg(QMC5883P_I2C_ADDR, QMC5883P_REG_CTRL2, ctrl_value);
 
-    ctrl_value = QMC5883P_MODE_CONT | QMC5883P_ODR_100HZ | QMC5883P_OSR1_8 | QMC5883P_OSR2_1; // 连续测量模式，ODR 100Hz，过采样率 8， 下采样率 1
+    ctrl_value = QMC5883P_MODE_SUSPEND;
     sensor_i2c_writereg(QMC5883P_I2C_ADDR, QMC5883P_REG_CTRL1, ctrl_value);
+    QMC5883P_SetPowerMode(QMC5883P_POWER_MODE_OFF);
 
+}
+
+rt_err_t QMC5883P_SetPowerMode(qmc5883p_power_mode_t mode)
+{
+    rt_uint8_t ctrl_value;
+
+    if(qmc5883p_power_mode_ready && mode == qmc5883p_power_mode)
+    {
+        return RT_EOK;
+    }
+
+    if(mode == QMC5883P_POWER_MODE_ON)
+    {
+        ctrl_value = QMC5883P_SET_RESET_ON | QMC5883P_RNG_8G;
+        if(sensor_i2c_writereg(QMC5883P_I2C_ADDR, QMC5883P_REG_CTRL2, ctrl_value) != RT_EOK)
+        {
+            return -RT_ERROR;
+        }
+
+        ctrl_value = QMC5883P_MODE_CONT | QMC5883P_ODR_100HZ | QMC5883P_OSR1_8 | QMC5883P_OSR2_1;
+    }
+    else
+    {
+        mode = QMC5883P_POWER_MODE_OFF;
+        ctrl_value = QMC5883P_MODE_SUSPEND;
+    }
+
+    if(sensor_i2c_writereg(QMC5883P_I2C_ADDR, QMC5883P_REG_CTRL1, ctrl_value) != RT_EOK)
+    {
+        return -RT_ERROR;
+    }
+
+    qmc5883p_power_mode = mode;
+    qmc5883p_power_mode_ready = RT_TRUE;
+
+    return RT_EOK;
 }
 
 rt_uint8_t QMC5883P_getdata(rt_int16_t *out_x, rt_int16_t *out_y, rt_int16_t *out_z)
