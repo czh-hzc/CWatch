@@ -10,13 +10,13 @@
 #include "heart_sensor_power.h"
 #include "mag_sensor_power.h"
 #include "env_sensor_power.h"
+#include "imu_sensor_power.h"
 
 static rt_thread_t sensor_thread = RT_NULL;
 
 static void sensor_thread_entry(void *parameter)
 {
     lsm6ds3tr_init();
-    StepCounter_Init();
     BME280_init();
     MAX30102_init();
     QMC5883P_init();
@@ -49,6 +49,11 @@ static void sensor_thread_entry(void *parameter)
         if(EnvSensorPower_Apply(run_env) != RT_EOK)
         {
             run_env = 0;
+        }
+        if(ImuSensorPower_Apply(run_step, run_imu) != RT_EOK)
+        {
+            run_step = 0;
+            run_imu = 0;
         }
 
         if(run_heart)

@@ -15,6 +15,32 @@
 #define SENSOR_LOG(...) do { } while (0)
 #endif
 
+static lsm6ds3tr_power_mode_t lsm6ds3tr_power_mode = LSM6DS3TR_POWER_MODE_OFF;
+static rt_bool_t lsm6ds3tr_power_mode_ready = RT_FALSE;
+
+static rt_err_t lsm6ds3tr_set_pedometer(rt_bool_t enable)
+{
+    rt_uint8_t ctrl10;
+
+    if(sensor_i2c_readreg(LSM6DS3TR_C_I2C_ADDR_L, LSM6DS3TR_C_CTRL10_C, &ctrl10, 1) != RT_EOK)
+    {
+        return -RT_ERROR;
+    }
+
+    if(enable)
+    {
+        ctrl10 |= LSM6DS3TR_C_FUNC_EN | LSM6DS3TR_C_PEDO_EN;
+        ctrl10 &= (rt_uint8_t)(~LSM6DS3TR_C_PEDO_RST_STEP);
+    }
+    else
+    {
+        ctrl10 &= (rt_uint8_t)(~(LSM6DS3TR_C_PEDO_EN | LSM6DS3TR_C_PEDO_RST_STEP));
+        ctrl10 &= (rt_uint8_t)(~LSM6DS3TR_C_FUNC_EN);
+    }
+
+    return sensor_i2c_writereg(LSM6DS3TR_C_I2C_ADDR_L, LSM6DS3TR_C_CTRL10_C, ctrl10);
+}
+
 void lsm6ds3tr_readid(void)
 {
     rt_uint8_t id;
@@ -55,6 +81,63 @@ void lsm6ds3tr_init(void)
 
     ctrl_value = LSM6DS3TR_C_G_ODR_104HZ | LSM6DS3TR_C_G_FS_2000DPS;//陀螺仪104Hz 采样率, ±2000 dps 量程
     sensor_i2c_writereg(LSM6DS3TR_C_I2C_ADDR_L, LSM6DS3TR_C_CTRL2_G, ctrl_value);
+    lsm6ds3tr_SetPowerMode(LSM6DS3TR_POWER_MODE_OFF);
+}
+
+rt_err_t lsm6ds3tr_SetPowerMode(lsm6ds3tr_power_mode_t mode)
+{
+    rt_uint8_t ctrl1_xl;
+    rt_uint8_t ctrl2_g;
+    rt_bool_t enable_pedometer = RT_FALSE;
+
+    if(lsm6ds3tr_power_mode_ready && mode == lsm6ds3tr_power_mode)
+    {
+        return RT_EOK;
+    }
+
+    switch(mode)
+    {
+    case LSM6DS3TR_POWER_MODE_NORMAL:
+        ctrl1_xl = LSM6DS3TR_C_XL_ODR_104HZ | LSM6DS3TR_C_XL_FS_2G;
+        ctrl2_g = LSM6DS3TR_C_G_ODR_104HZ | LSM6DS3TR_C_G_FS_2000DPS;
+        break;
+
+    case LSM6DS3TR_POWER_MODE_STEP:
+        ctrl1_xl = LSM6DS3TR_C_XL_ODR_26HZ | LSM6DS3TR_C_XL_FS_2G;
+        ctrl2_g = LSM6DS3TR_C_G_ODR_POWER_DOWN | LSM6DS3TR_C_G_FS_2000DPS;
+        enable_pedometer = RT_TRUE;
+        break;
+
+    case LSM6DS3TR_POWER_MODE_OFF:
+    default:
+        mode = LSM6DS3TR_POWER_MODE_OFF;
+        ctrl1_xl = LSM6DS3TR_C_XL_ODR_POWER_DOWN | LSM6DS3TR_C_XL_FS_2G;
+        ctrl2_g = LSM6DS3TR_C_G_ODR_POWER_DOWN | LSM6DS3TR_C_G_FS_2000DPS;
+        break;
+    }
+
+    if(sensor_i2c_writereg(LSM6DS3TR_C_I2C_ADDR_L, LSM6DS3TR_C_CTRL1_XL, ctrl1_xl) != RT_EOK)
+    {
+        return -RT_ERROR;
+    }
+    if(sensor_i2c_writereg(LSM6DS3TR_C_I2C_ADDR_L, LSM6DS3TR_C_CTRL2_G, ctrl2_g) != RT_EOK)
+    {
+        return -RT_ERROR;
+    }
+    if(lsm6ds3tr_set_pedometer(enable_pedometer) != RT_EOK)
+    {
+        return -RT_ERROR;
+    }
+
+    if(mode != LSM6DS3TR_POWER_MODE_OFF)
+    {
+        rt_thread_mdelay(20);
+    }
+
+    lsm6ds3tr_power_mode = mode;
+    lsm6ds3tr_power_mode_ready = RT_TRUE;
+
+    return RT_EOK;
 }
 
 rt_uint8_t lsm6ds3tr_getdata(float *out_gx, float *out_gy, float *out_gz, float *out_ax, float *out_ay, float *out_az)
